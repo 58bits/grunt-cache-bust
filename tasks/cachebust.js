@@ -29,6 +29,7 @@ module.exports = function(grunt) {
         encoding: 'utf8',
         length: 16,
         replaceTerms:[],
+        bustOnly: false,
         rename: true,
         separator: '.',
         ignorePatterns: [],
@@ -216,7 +217,7 @@ module.exports = function(grunt) {
                         }
                     }
 
-                    if(opts.rename) {
+                    if(opts.rename || opts.bustOnly) {
 
                         // If the file has already been cached, use that
                         if(processedFileMap[filename]) {
@@ -253,7 +254,9 @@ module.exports = function(grunt) {
                             markup = markup.replace(new RegExp(regexEscape(reference), 'g'), newReference);
 
                             // Create our new file
-                            grunt.file.copy(filename, newFilename);
+                            if(opts.rename) {
+                              grunt.file.copy(filename, newFilename);
+                            }
                         }
                     } else {
                         newFilename = reference.split('?')[0] + '?' + generateHash(grunt.file.read(filename));
