@@ -254,7 +254,7 @@ module.exports = function(grunt) {
                             markup = markup.replace(new RegExp(regexEscape(reference), 'g'), newReference);
 
                             // Create our new file
-                            if(opts.rename) {
+                            if(opts.rename && !opts.bustOnly) {
                               grunt.file.copy(filename, newFilename);
                             }
                         }
